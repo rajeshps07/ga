@@ -1,2 +1,2 @@
 # ga
-GitHub Actions Certifications
+GitHub Actions Certification
