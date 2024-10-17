@@ -57,3 +57,21 @@ To identify the type of actions used in a GitHub Actions workflow file, you can 
 - **Composite actions and reusable workflows**: Identified by `uses` pointing to another action or workflow in a repository.
 
 By checking the `uses` and `run` keywords, you'll be able to identify the type of action being used in any GitHub Actions workflow file.
+
+
+
+```
+graph TD
+    A[GitHub Actions Workflow File] --> B{`uses` keyword?}
+    B -->|Yes| C[Pre-built Actions]
+    C --> D[Format: `org/action@version`]
+    B -->|Yes| E[Custom Actions]
+    E --> F[Format: `./path-to-action`]
+    B -->|No| G{`run` keyword?}
+    G -->|Yes| H[Direct Commands/Scripts]
+    H --> I[Executes shell commands or scripts]
+    G -->|No| J[Composite Actions/Reusable Workflows]
+    J --> K[Format: `org/repo/.github/workflows/workflow.yml@branch`]
+```
+
+
