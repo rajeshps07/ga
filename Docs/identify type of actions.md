@@ -74,4 +74,14 @@ graph TD
     J --> K[Format: `org/repo/.github/workflows/workflow.yml@branch`]
 ```
 
+```mermaid
+  info
+```
 
+
+### In this diagram:
+
+* The first check is whether the uses keyword is present.
+* If uses is found, it’s either a Pre-built Action (identified by org/action@version) or a Custom Action (identified by ./path-to-action).
+* If uses is not found, the next check is for the run keyword, which identifies Direct Commands/Scripts.
+* If neither uses nor run is found, it may be a Composite Action or Reusable Workflow (identified by a reference to another workflow).
