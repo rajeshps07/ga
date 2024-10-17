@@ -1,0 +1,59 @@
+To identify the type of actions used in a GitHub Actions workflow file, you can follow these steps by looking at the YAML file:
+
+### 1. **Check the `uses` Keyword**:
+   - In the workflow file, under the `jobs` section, you’ll find `steps`. Within these `steps`, the `uses` keyword specifies the action being used.
+   - Actions can either be:
+     - **Pre-built GitHub Actions**: These are reusable actions hosted on GitHub or available through the GitHub Marketplace.
+     - **Custom Actions**: These are actions specific to the repository or an organization.
+
+   **Example**:
+   ```yaml
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v2  # Pre-built GitHub action
+     - name: Run custom action
+       uses: ./custom-action  # Custom action stored locally in the repository
+   ```
+
+   - Pre-built actions like `actions/checkout@v2` are identified by their organization and version (e.g., `actions` is the organization, and `checkout@v2` is the action and version).
+   - Custom actions are usually local and defined with a relative path like `./custom-action`.
+
+### 2. **Check for `run` Keyword**:
+   - When the workflow directly runs shell commands or scripts without using a reusable action, the `run` keyword is used.
+   - This is not a specific "action" but a direct command executed in the workflow environment.
+
+   **Example**:
+   ```yaml
+   steps:
+     - name: Run a shell script
+       run: |
+         echo "Hello, World!"
+         ./scripts/deploy.sh
+   ```
+
+### 3. **Identify Composite Actions**:
+   - Some workflows use **composite actions**, which combine multiple steps into one action. These are defined using multiple `run` or `uses` within the same action definition.
+   - They are usually stored in a repository and referenced as a reusable action.
+
+   **Example**:
+   ```yaml
+   steps:
+     - name: Use composite action
+       uses: org/composite-action@v1
+   ```
+
+### 4. **Look for Reusable Workflows**:
+   - You might find references to reusable workflows in other repositories or within the same repository using the `workflow_call` trigger.
+
+   **Example**:
+   ```yaml
+   uses: org/reusable-workflow/.github/workflows/deploy.yml@main
+   ```
+
+### Summary:
+- **Pre-built actions**: Identified by `uses: <organization>/<action>@<version>`.
+- **Custom actions**: Identified by `uses: ./path-to-action`.
+- **Direct commands/scripts**: Identified by `run`.
+- **Composite actions and reusable workflows**: Identified by `uses` pointing to another action or workflow in a repository.
+
+By checking the `uses` and `run` keywords, you'll be able to identify the type of action being used in any GitHub Actions workflow file.
