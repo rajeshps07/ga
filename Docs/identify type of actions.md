@@ -85,3 +85,50 @@ graph TD
 * If uses is found, it’s either a Pre-built Action (identified by org/action@version) or a Custom Action (identified by ./path-to-action).
 * If uses is not found, the next check is for the run keyword, which identifies Direct Commands/Scripts.
 * If neither uses nor run is found, it may be a Composite Action or Reusable Workflow (identified by a reference to another workflow).
+
+
+
+
+
+
+```
+graph TD
+  A[GitHub Actions Workflow File] --> B[Actions]
+  A --> C[Commands]
+  B --> D[Pre-built Actions]
+  B --> E[Custom Actions]
+
+  D --> F[actions/checkout@v2]
+  D --> G[actions/setup-node@v3]
+
+  E --> H[Docker Container Action]
+  E --> I[Javascript Action]
+  E --> J[Composite Action]
+
+  C --> K[run keyword]
+  K --> L[Shell commands/scripts]
+
+  H --> M[Dockerfile]
+  H --> N[action.yml]
+
+  I --> O[JavaScript Code]
+  I --> P[action.yml]
+
+  J --> Q[Multiple Steps]
+  J --> R[action.yml]
+  
+  A --> S[Reusable Workflow]
+  S --> T[workflow_call trigger]
+
+```
+
+### Explanation:
+1. Actions Workflow File: Represents the overall .yml file where the workflow is defined.
+2. Actions: Splits into Pre-built Actions and Custom Actions.
+   - Pre-built Actions: Actions from GitHub or third-party repositories (e.g., actions/checkout@v2, actions/setup-node@v3).
+   - Custom Actions: Includes Docker Container Actions, JavaScript Actions, and Composite Actions.
+      - Docker Container Action: Defined by a Dockerfile and an action.yml file.
+      - JavaScript Action: Defined by JavaScript code and an action.yml file.
+      - Composite Action: Defined with multiple steps and an action.yml file.
+3. Commands: Represented by the run keyword, which directly runs shell commands or scripts.
+4. Reusable Workflow: Uses the workflow_call trigger to reference workflows in other repositories or within the same repository.
